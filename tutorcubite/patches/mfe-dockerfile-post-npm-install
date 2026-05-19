@@ -1,0 +1,43 @@
+# Cubite brand: replace the default @openedx/brand with @cubite/brand-openedx
+# and install frontend-plugin-framework so we can inject the Powered by Cubite
+# footer slot via env.config.jsx (written below).
+RUN npm install '{{ CUBITE_BRAND_ALIAS }}@npm:{{ CUBITE_BRAND_PACKAGE_SPEC }}'
+RUN npm install --no-save @openedx/frontend-plugin-framework
+
+# Inject Powered by Cubite into the footer plugin slot. The slot ID
+# `footer_slot` is the standard name exposed by frontend-component-footer
+# in Ulmo+. If a given MFE does not render this slot, the plugin is a no-op.
+RUN cat > env.config.jsx <<'CUBITE_ENV_EOF'
+import React from 'react';
+import { DIRECT_PLUGIN } from '@openedx/frontend-plugin-framework';
+
+const PoweredByCubite = () => (
+  <div className="cubite-powered-by">
+    {'{{ CUBITE_POWERED_BY_TEXT }}'.split('Cubite')[0]}
+    <a href="{{ CUBITE_POWERED_BY_URL }}" target="_blank" rel="noopener">
+      Cubite
+    </a>
+  </div>
+);
+
+const config = {
+  pluginSlots: {
+    footer_slot: {
+      keepDefault: true,
+      plugins: [
+        {
+          op: 'insert',
+          widget: {
+            id: 'cubite-powered-by',
+            type: DIRECT_PLUGIN,
+            priority: 60,
+            RenderWidget: PoweredByCubite,
+          },
+        },
+      ],
+    },
+  },
+};
+
+export default config;
+CUBITE_ENV_EOF

@@ -1,0 +1,4 @@
+# Cubite brand: copy logos + favicons into LMS/Studio static dirs so
+# collectstatic picks them up and they are served at /static/cubite/...
+COPY --chown=app:app --from=openedx-cubite-brand /cubite-brand /openedx/edx-platform/lms/static/cubite
+COPY --chown=app:app --from=openedx-cubite-brand /cubite-brand /openedx/edx-platform/cms/static/cubite

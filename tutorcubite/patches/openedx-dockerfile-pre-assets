@@ -1,0 +1,5 @@
+# Cubite brand: a thin build stage that carries the brand assets into the
+# main openedx image. The `cubite-brand/` directory is materialized by the
+# Tutor plugin renderer next to the openedx Dockerfile.
+FROM scratch AS openedx-cubite-brand
+COPY cubite-brand /cubite-brand

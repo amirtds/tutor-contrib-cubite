@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tutor-contrib-cubite"
+version = "1.0.0"
+description = "Tutor plugin that applies the Cubite brand to Open edX (Ulmo+): wires the @cubite/brand-openedx package into every MFE, adds a Powered by Cubite footer link, and sets platform-level branding defaults."
+readme = "README.md"
+license = { text = "Apache-2.0" }
+authors = [{ name = "Cubite", email = "hello@cubite.io" }]
+keywords = ["openedx", "tutor", "plugin", "brand", "cubite"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Framework :: Tutor",
+  "License :: OSI Approved :: Apache Software License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+]
+requires-python = ">=3.9"
+dependencies = ["tutor>=21.0.0,<22.0.0"]
+
+[project.entry-points."tutor.plugin.v1"]
+cubite = "tutorcubite.plugin"
+
+[project.urls]
+Homepage = "https://cubite.io"
+Source = "https://github.com/cubite/tutor-contrib-cubite"
+
+[tool.setuptools]
+packages = ["tutorcubite"]
+include-package-data = true
+
+[tool.setuptools.package-data]
+tutorcubite = [
+  "templates/cubite/**/*",
+  "patches/*",
+]

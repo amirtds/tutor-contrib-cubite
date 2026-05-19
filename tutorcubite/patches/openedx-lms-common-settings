@@ -1,0 +1,16 @@
+# Cubite brand: LMS-specific branding URLs and footer overrides
+LOGO_URL = "//{{ LMS_HOST }}{{ CUBITE_LOGO_PATH }}"
+LOGO_URL_PNG = LOGO_URL
+LOGO_URL_SVG = LOGO_URL
+LOGO_TRADEMARK_URL = "//{{ LMS_HOST }}{{ CUBITE_LOGO_TRADEMARK_PATH }}"
+LOGO_POWERED_BY_OPEN_EDX_URL = "//{{ LMS_HOST }}{{ CUBITE_LOGO_TRADEMARK_PATH }}"
+FAVICON_PATH = "{{ CUBITE_FAVICON_PATH }}"
+
+# Sensible footer defaults pointing at Cubite.
+MKTG_URL_LINK_MAP = MKTG_URL_LINK_MAP if "MKTG_URL_LINK_MAP" in dir() else {}
+MKTG_URL_LINK_MAP.update({
+    "ABOUT": "{{ CUBITE_POWERED_BY_URL }}/about",
+    "CONTACT": "{{ CUBITE_POWERED_BY_URL }}/contact",
+    "TOS_AND_HONOR": "{{ CUBITE_POWERED_BY_URL }}/terms",
+    "PRIVACY": "{{ CUBITE_POWERED_BY_URL }}/privacy",
+})
