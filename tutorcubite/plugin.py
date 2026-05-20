@@ -38,11 +38,16 @@ hooks.Filters.CONFIG_DEFAULTS.add_items(
         ("CUBITE_PLATFORM_DESCRIPTION", "Learning platform powered by Cubite"),
         ("CUBITE_SUPPORT_EMAIL", "support@cubite.io"),
         ("CUBITE_CONTACT_EMAIL", "hello@cubite.io"),
-        # Static asset paths served by the LMS (relative to LMS_HOST).
+        # Browser-facing URL paths (start with /static/, served by the LMS).
+        # Used in LOGO_URL, MFE_CONFIG[*_URL], etc.
         ("CUBITE_LOGO_PATH", "/static/cubite/logo.svg"),
         ("CUBITE_LOGO_WHITE_PATH", "/static/cubite/logo-white.svg"),
         ("CUBITE_LOGO_TRADEMARK_PATH", "/static/cubite/logo-trademark.svg"),
         ("CUBITE_FAVICON_PATH", "/static/cubite/favicon.ico"),
+        # staticfiles-relative names. Django's FAVICON_PATH setting is passed
+        # to staticfiles_storage.url() which requires a path relative to
+        # STATIC_ROOT — an absolute URL would trigger SuspiciousFileOperation.
+        ("CUBITE_FAVICON_STATICFILES", "cubite/favicon.ico"),
     ]
 )
 
