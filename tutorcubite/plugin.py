@@ -64,10 +64,11 @@ for patch_path in sorted(glob(os.path.join(HERE, "patches", "*"))):
 hooks.Filters.ENV_TEMPLATE_ROOTS.add_item(os.path.join(HERE, "templates"))
 hooks.Filters.ENV_TEMPLATE_TARGETS.add_items(
     [
-        # Contribute files into env/build/ — specifically the openedx image
-        # build context at env/build/openedx/cubite-brand/.
-        ("cubite/build", "build"),
-        # Plugin-private app templates rendered under env/plugins/cubite/.
-        ("cubite/apps", "plugins"),
+        # Brand assets land in the openedx image build context so the
+        # `openedx-dockerfile-pre-assets` patch can COPY them in.
+        # The template prefix is NOT stripped — files at
+        # templates/cubite-brand/X are written to env/{dst}/cubite-brand/X.
+        # So dst=build/openedx puts assets at env/build/openedx/cubite-brand/.
+        ("cubite-brand", "build/openedx"),
     ]
 )
