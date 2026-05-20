@@ -17,6 +17,32 @@ from tutor import hooks
 
 HERE = os.path.abspath(os.path.dirname(__file__))
 
+# MFEs we do NOT ship in the Cubite distribution. Dropping them cuts MFE
+# build time roughly in half and keeps small VMs (4GB RAM) from OOM-killing
+# the parallel npm installs that buildx kicks off per MFE. These four are
+# admin/instructor tools or rarely-used flows; the core learner + author
+# experience is fully covered by the remaining 7 MFEs.
+CUBITE_DROPPED_MFES = (
+    "admin-console",
+    "communications",
+    "gradebook",
+    "ora-grading",
+)
+
+try:
+    from tutormfe.hooks import MFE_APPS
+
+    @MFE_APPS.add()
+    def _cubite_trim_mfes(apps):
+        for name in CUBITE_DROPPED_MFES:
+            apps.pop(name, None)
+        return apps
+
+except ImportError:
+    # tutor-mfe is not installed — skip silently. The brand patches that
+    # apply only to MFE Dockerfiles will be inert in that case.
+    pass
+
 # -----------------------------------------------------------------------------
 # Config defaults — overridable in `config.yml` with `tutor config save --set`
 # -----------------------------------------------------------------------------
