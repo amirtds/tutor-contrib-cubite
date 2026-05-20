@@ -1,7 +1,7 @@
 # Cubite brand: replace the default @openedx/brand with @cubite/brand-openedx
 # and install frontend-plugin-framework so we can inject the Powered by Cubite
 # footer slot via env.config.jsx (written below).
-RUN npm install '{{ CUBITE_BRAND_ALIAS }}@npm:{{ CUBITE_BRAND_PACKAGE_SPEC }}'
+RUN npm install '{{ CUBITE_BRAND_ALIAS }}@{{ CUBITE_BRAND_PACKAGE_SPEC }}'
 RUN npm install --no-save @openedx/frontend-plugin-framework
 
 # Inject Powered by Cubite into the footer plugin slot. The slot ID

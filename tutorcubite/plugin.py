@@ -23,9 +23,10 @@ HERE = os.path.abspath(os.path.dirname(__file__))
 hooks.Filters.CONFIG_DEFAULTS.add_items(
     [
         ("CUBITE_VERSION", "1.0.0"),
-        # npm spec for the brand package. Public npm by default; switch to a
-        # git URL or local tarball for development.
-        ("CUBITE_BRAND_PACKAGE_SPEC", "@cubite/brand-openedx@^1.0.0"),
+        # npm-installable spec for the brand package. Accepts any form npm
+        # understands: `name@version`, `github:owner/repo#ref`, a tarball URL,
+        # or a local file path.
+        ("CUBITE_BRAND_PACKAGE_SPEC", "github:amirtds/brand-openedx-cubite#master"),
         # The npm alias name the MFEs import. Do not change unless you know
         # what you are doing — Paragon expects `@openedx/brand`.
         ("CUBITE_BRAND_ALIAS", "@openedx/brand"),
