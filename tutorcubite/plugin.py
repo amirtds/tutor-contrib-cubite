@@ -30,13 +30,29 @@ CUBITE_DROPPED_MFES = (
 )
 
 try:
-    from tutormfe.hooks import MFE_APPS
+    from tutormfe.hooks import MFE_APPS, PLUGIN_SLOTS
 
     @MFE_APPS.add()
     def _cubite_trim_mfes(apps):
         for name in CUBITE_DROPPED_MFES:
             apps.pop(name, None)
         return apps
+
+    # Register the Powered by Cubite footer widget into every MFE's
+    # footer_slot. The third element of each tuple is the *JSX expression*
+    # that becomes a single entry in the `plugins: []` array for that slot
+    # — tutor-mfe inlines it inside the env.config.jsx template inside the
+    # try{} block where DIRECT_PLUGIN is available via dynamic import.
+    _POWERED_BY_PLUGIN_JSX = """{
+        op: PLUGIN_OPERATIONS.Insert,
+        widget: {
+          id: 'cubite-powered-by',
+          type: DIRECT_PLUGIN,
+          priority: 60,
+          RenderWidget: PoweredByCubite,
+        },
+      }"""
+    PLUGIN_SLOTS.add_item(("all", "footer_slot", _POWERED_BY_PLUGIN_JSX))
 
 except ImportError:
     # tutor-mfe is not installed — skip silently. The brand patches that

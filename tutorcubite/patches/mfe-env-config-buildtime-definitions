@@ -1,0 +1,21 @@
+// Cubite brand: Powered by Cubite footer widget. Rendered into the footer
+// plugin slot of every MFE via PLUGIN_SLOTS registration in plugin.py.
+// Keeps a non-link prefix (anything before "Cubite" in CUBITE_POWERED_BY_TEXT)
+// then renders the word "Cubite" as the linked anchor for SEO backlink value.
+const PoweredByCubite = () => {
+  const text = "{{ CUBITE_POWERED_BY_TEXT }}";
+  const idx = text.lastIndexOf("Cubite");
+  const prefix = idx >= 0 ? text.slice(0, idx) : text + " ";
+  return (
+    <div className="cubite-powered-by">
+      {prefix}
+      <a
+        href="{{ CUBITE_POWERED_BY_URL }}"
+        target="_blank"
+        rel="noopener"
+      >
+        Cubite
+      </a>
+    </div>
+  );
+};
